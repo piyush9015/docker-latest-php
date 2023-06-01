@@ -1,0 +1,106 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: ${DIR_USER}
+        uid: ${DIR_USERID}
+      context: ./
+      dockerfile: Dockerfile
+    container_name: mage-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - myapp:/var/www      
+      #- ./mcode:/tmp      
+
+    networks:
+      - nxnetowrk
+
+  db:
+    image: mysql:8.0
+    container_name: mage-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    networks:
+      - nxnetowrk
+
+  mailhog:
+    container_name: mail
+    image: mailhog/mailhog:latest
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - "1025:1025" # SMTP Server
+      - "8025:8025" # Web Ui
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.0
+    container_name: mage-elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - 9500:9200  
+    networks:
+      - nxnetowrk
+          
+  phpmyadmin:
+        container_name: mage-phpmyadmin
+        restart: always
+        image: phpmyadmin/phpmyadmin:latest
+        environment:
+          # - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+          # - PMA_USER=${DB_USERNAME}
+          # - PMA_PASSWORD=${DB_PASSWORD}
+          - PMA_HOST=mage-db
+        ports:
+          - "9900:80"
+        links:
+          - db:db
+        depends_on:
+          - db
+        networks:
+          - nxnetowrk
+
+  nginx:
+    image: nginx:latest
+    container_name: mage-nginx
+    mem_limit: 1024m
+    mem_reservation: 256M
+    cpus: 0.5
+    restart: unless-stopped
+    ports:
+      - "8800:80"
+    volumes:
+      - myapp:/var/www
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - nxnetowrk
+
+networks:
+  nxnetowrk:
+    driver: bridge
+
+volumes:
+  myapp:
+    external: false
