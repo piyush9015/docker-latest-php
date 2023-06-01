@@ -59,6 +59,7 @@ Magento 2.4.x Docker Setup:
                                 --opensearch-timeout=15        
                            
                 3. Steps to install module:
+                
                     ```
                     composer config repositories.shopfinder-module vcs https://github.com/manish-ranjann/shopfinder.git
                     composer require vendor/module-shopfinder:dev-main
