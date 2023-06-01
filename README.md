@@ -12,7 +12,7 @@ Magento 2.4.x Docker Setup:
     * Docker > Preferences > Resources > Advanced : at least 4 or 5 CPUs and 8.0 GB RAM
     * Local machine have alteast 16GB RAM(Recommended)    
 
-2. Clone docker-latest-php repository and Build the docker Images:
+2. Clone docker-latest-php repository (https://github.com/piyush9015/docker-latest-php.git) and Build the docker Images:
 
         * docker-compose build
         * docker-compose up -d
@@ -61,7 +61,7 @@ Magento 2.4.x Docker Setup:
                 3. Steps to install module:
                 
                     
-                    composer config repositories.shopfinder-module vcs https://github.com/manish-ranjann/shopfinder.git
+                    composer config repositories.shopfinder-module vcs https://github.com/piyush9015/shopfinder.git
                     composer require vendor/module-shopfinder:dev-main
                     php bin/magento setup:static-content:deploy 
                     php bin/magento setup:upgrade
