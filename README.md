@@ -63,7 +63,6 @@ Magento 2.4.x Docker Setup:
                     
                     composer config repositories.shopfinder-module vcs https://github.com/manish-ranjann/shopfinder.git
                     composer require vendor/module-shopfinder:dev-main
-                    composer update vendor/module-shopfinder
                     php bin/magento setup:static-content:deploy 
                     php bin/magento setup:upgrade
                     php bin/magento setup:di:compile
@@ -74,4 +73,8 @@ Magento 2.4.x Docker Setup:
    2. Mac/Ubuntu:-  /etc/hosts
 
 7. Open http://magento2.local:8800/ 
+
+8. Run Unit Test Case:
+./vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist app/code/Example/Module/Test/Unit
+
 
