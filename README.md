@@ -75,6 +75,70 @@ Magento 2.4.x Docker Setup:
 7. Open http://magento2.local:8800/ 
 
 8. Run Unit Test Case:
-./vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist app/code/Example/Module/Test/Unit
+php ./vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist vendor/vendor/module-shopfinder/Test/Unit
+
+9. GraphQL Endpoints:
 
 
+    1. Shop List 
+    
+    query {
+      shopList {
+        shopfinder_id
+        shopname
+        identifier
+        country
+        image
+        longitude
+        latitude
+        store
+        is_active
+        created_at
+        updated_at
+      }
+    }
+  
+
+   2. Shop List By ID
+    
+    query {
+      shopListById (
+          id: 2
+      ) {
+        shopfinder_id
+        shopname
+        identifier
+        country
+        image
+        longitude
+        latitude
+        store
+        is_active
+        created_at
+        updated_at
+      }
+    }
+
+
+   3. Update Shop
+    Request Body
+    
+    mutation {
+      updateShop (
+          id: 1
+          input : {
+              shopname: "2"
+              identifier: "somename"
+          }
+      ) {
+        shopfinder_id
+        shopname
+        identifier
+        country
+        image
+        longitude
+        latitude
+        store
+        is_active
+      }
+    }
