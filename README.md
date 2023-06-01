@@ -60,7 +60,7 @@ Magento 2.4.x Docker Setup:
                            
                 3. Steps to install module:
                 
-                    ```
+                    ```xml
                     composer config repositories.shopfinder-module vcs https://github.com/manish-ranjann/shopfinder.git
                     composer require vendor/module-shopfinder:dev-main
                     composer update vendor/module-shopfinder
