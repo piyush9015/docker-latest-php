@@ -60,14 +60,14 @@ Magento 2.4.x Docker Setup:
                            
                 3. Steps to install module:
                 
-                    ```xml
+                    
                     composer config repositories.shopfinder-module vcs https://github.com/manish-ranjann/shopfinder.git
                     composer require vendor/module-shopfinder:dev-main
                     composer update vendor/module-shopfinder
                     php bin/magento setup:static-content:deploy 
                     php bin/magento setup:upgrade
                     php bin/magento setup:di:compile
-                    ```        
+                      
 
 6. Configure your hosts file: 127.0.0.1 magento2.local 
    1. In windows:-  c:\Windows\System32\Drivers\etc\hosts.
